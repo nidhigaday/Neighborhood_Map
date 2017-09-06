@@ -69,12 +69,16 @@ This map displays some of the locations in Vancouver, BC where TV Series - [Supe
 ## Issues during deployment:
 
 * **Error:** Uncaught ReferenceError: google is not defined
+  
   **Solution:** Script or Google Javascript API callback function, or any google.maps.* function is being called before Google Api. Any google function will not be defined until api request is made.
 * **Issue:** Multiple InfoWindows will open but content was displayed in the very InfoWindow that was open in the map
+  
   **Solution:** Keep the variable global (var windowInfo), and put defination in ViewModel or callback function
 * **Issue:** After closing InfoWindow, it won't open again when clicked on list item or pin
+  
   **Solution:** When used InfoWindow.close(), it removes the InfoWindow from the DOM, i.e. It set the value of global variable var windowInfo = null. We need to re-assign new google.maps.InfoWindow(); after calling close()
 * **Deferred update:** When I entered search term in the input bar, it would update map and list only when I enter second letter or second key press. This caused delay and asynchronous update rendering.
+  
   **Solution:** I noticed that when following is used for computed observablearray - value: computedObservableArray, valueUpdate: 'afterkeydown' or 'keydown'. textInput is better approach to get update with computed observablearray. [Source: Browser event quirks handling](http://knockoutjs.com/documentation/textinput-binding.html)
 
 
