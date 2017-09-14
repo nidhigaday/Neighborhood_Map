@@ -1,0 +1,53 @@
+<html>
+
+<head>
+  <title>Supernatural - Neighborhood Map</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" type="text/css" href="src/css/mapstyles.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="sec_nav">
+      <div class="sec_menu sec_menu--icon" id="sec_menu" data-bind="click: openList">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+      <input class="input_box" placeholder="Enter the favourite location!" type="text" data-bind="textInput: typedAddress, valueUpdate: 'keypress'" />
+    </div>
+
+    <ul class="sec_list--mob" id="sec_list--mob" data-bind="foreach: currentLocs">
+      <li class="sec_loc" data-bind="click: $parent.centerLoc">
+        <span class="loc_title" data-bind="text: loc"></span>
+      </li>
+    </ul>
+
+    <div class="container">
+      <div class="element sec_list">
+        <div class="sec_input sec_clear">
+          <input class="input_box" placeholder="Enter the favourite location!" type="text" data-bind="textInput: typedAddress" />
+        </div>
+        <ul class="sec_list--loc" id="sec_list--mob" data-bind="foreach: currentLocs">
+          <li class="sec_loc clearfix" data-bind="click: $parent.openLocInfo">
+            <span class="loc_title" data-bind="text: loc"></span>
+          </li>
+        </ul>
+      </div>
+      <div id="map" class="element sec_map"></div>
+    </div>
+
+  </div>
+
+  <script src="src/js/lib/knockout-3.2.0.js"></script>
+  <script src="src/js/knockout.localStorage.js"></script>
+  <script type="text/javascript" src="src/js/data.js"></script>
+  <script type="text/javascript" src="src/js/config.js"></script>
+  <script defer src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="src/js/appEngine.js"></script>
+
+</body>
+
+</html>

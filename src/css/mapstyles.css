@@ -1,0 +1,262 @@
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      color: #111;
+      background-color: rgba(229, 246, 221, 0.15);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .clearfix {
+      clear: both;
+    }
+
+    .bold {
+      font-weight: 600;
+    }
+
+    .container {
+      display: block;
+      width: 100%;
+    }
+
+    .sec_nav {
+      background-color: rgb(229, 246, 221);
+    }
+
+    .element {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .sec_map {
+      width: 78.5%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .sec_list {
+      width: 21%;
+      max-height: 635px;
+      overflow-y: scroll;
+    }
+
+    .infoStyle {
+      color: #111;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 400px;
+      padding: 5px 2px;
+    }
+
+    .infoStyle>div {
+      margin-bottom: 5px;
+    }
+
+    .infoTitle {
+      padding: 3px 5px;
+      background-color: rgb(229, 246, 221);
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    #infoPanoImage, #locImg {
+      display: block;
+      width: 100%;
+      min-height: 200px;
+      margin: 10px 0 0 0;
+      font-weight: 500;
+    }
+
+    #infoWiki {
+      margin-top: 10px;
+    }
+
+    #infoWiki ul {
+      padding: 0;
+    }
+
+    #infoWiki li a {
+      color: #4c8f2d;
+      text-decoration: none;
+      font-size: 15px;
+      padding: 3px 5px;
+    }
+
+    #infoWiki li a:hover {
+      font-weight: 700;
+    }
+
+    .buttons {
+      display: inline-block;
+      color: black;
+      padding: 2px;
+      margin-right: 5px;
+      border-radius: 5px;
+      box-shadow: 6px 6px 6px #888;
+    }
+
+    .sec_clear {
+      clear: both;
+    }
+
+    .sec_input {
+      text-align: center;
+      background-color: rgb(229, 246, 221);
+      padding: 10px 0 13px 0;
+      position: fixed;
+      width: inherit;
+    }
+
+    .input_box {
+      width: 80%;
+      padding: 10px;
+      box-shadow: 6px 6px 6px #888;
+      border: none;
+      font-size: 15px;
+      border-radius: 5px;
+    }
+
+    .sec_list--loc {
+      display: block;
+      text-align: left;
+      list-style-type: none;
+      padding: 0 15px;
+      margin-bottom: 10px;
+      list-style-position: inside;
+      margin-top: 70px;
+    }
+
+    .sec_loc {
+      color: #111;
+      background-color: rgba(198, 212, 186, 0.64);
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 5px;
+      box-shadow: 6px 6px 6px #888;
+    }
+
+    .sec_loc:active {
+      box-shadow: 3px 3px 6px #888;
+    }
+
+    .loc_title {
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .sec_loc span {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .sec_loc:hover {
+      cursor: pointer;
+    }
+    /*.sec_loc:hover+.icon_fav {
+      display: block;
+    }
+
+    .icon_fav {
+      width: 20px;
+      height: 16px;
+      display: none;
+      margin-left: 10px;
+      float: right;
+    }
+
+    .icon_fav.fav {
+      background-color: rgb(107, 169, 79);
+    }*/
+
+    @media screen and (max-width: 768px) {
+      #infoPanoImage {
+        display: none;
+      }
+      #locImg {
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      #locImg {
+        display: none;
+      }
+      #infoPanoImage {
+        display: block;
+      }
+    }
+
+    @media screen and (max-width: 960px) {
+      .sec_nav {
+        display: block;
+      }
+      .sec_input, .sec_list--loc, .sec_list--mob {
+        display: none;
+      }
+      .sec_map {
+        width: 100%;
+      }
+      .input_box {
+        width: 100%;
+        box-shadow: none;
+        margin-left: 40px;
+      }
+      .sec_menu {
+        display: inline-block;
+      }
+      .sec_menu--icon {
+        cursor: pointer;
+        margin-right: 10px;
+        position: absolute;
+      }
+      .bar1, .bar2, .bar3 {
+        width: 30px;
+        height: 4px;
+        background-color: rgb(107, 169, 79);
+        margin: 5px;
+        transition: 0.4s;
+        border-radius: 5px;
+      }
+      /* Rotate first bar */
+      .change .bar1 {
+        -webkit-transform: rotate(-45deg) translate(-7px, 6px);
+        transform: rotate(-45deg) translate(-7px, 6px);
+      }
+      /* Fade out the second bar */
+      .change .bar2 {
+        opacity: 0;
+      }
+      /* Rotate last bar */
+      .change .bar3 {
+        -webkit-transform: rotate(45deg) translate(-6px, -6px);
+        transform: rotate(45deg) translate(-6px, -6px);
+      }
+      .sec_list--mob {
+        width: 200px;
+        max-height: 260px;
+        z-index: 3;
+        position: absolute;
+        margin-top: 0;
+        padding-top: 10px;
+        overflow-y: scroll;
+        background-color: rgb(229, 246, 221);
+        border: 2px solid #7cb342;
+        border-top: none;
+        border-left: none;
+        text-align: left;
+        list-style-type: none;
+        padding: 10px;
+        margin: 0;
+        list-style-position: inside;
+      }
+    }
+
+    @media screen and (min-width: 960px) {
+      .sec_nav, .sec_list--mob {
+        display: none;
+      }
+    }
