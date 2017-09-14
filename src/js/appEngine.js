@@ -166,10 +166,9 @@ var locModel = function(data, index) {
       //getPanoramaByLocation(latlng, radius, callback fn)
       streetView.getPanoramaByLocation(thisMarker.position, radius,
         self.getStreetView);
-      
-      //get wiki links
+
+      // self.getStreetView(data, status, thisMarker);
       self.WikiInfo(thisMarker);
-      
       //open content in infoWindow at anchor - thisMarker on 'map'
       infoWindow.open(map, thisMarker);
     }
