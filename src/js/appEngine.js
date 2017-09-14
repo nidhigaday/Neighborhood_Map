@@ -1,4 +1,4 @@
-/*======Append Google API=====*/
+/*======Append Google API to DOM=====*/
 
 var loadScript = function() {
 
@@ -81,7 +81,7 @@ var locModel = function(data, index) {
       $('#infoWiki').text('Failed to load Wikipedia Resources');
     }, 1000);
 
-
+    //get call to request Wiki API data
     $.ajax({
       url: Wikiurl,
       dataType: 'jsonp'
@@ -104,9 +104,8 @@ var locModel = function(data, index) {
 
     //OK means, image found in given location
     if (status === google.maps.StreetViewStatus.OK) {
-
-      //data passed here is used to get lat lng, radius
       var nearLoc = val.location.latLng;
+      
       //calculate heading for the panorama image option
       var heading = google.maps.geometry.spherical.computeHeading(
         nearLoc, self.marker.position);
@@ -124,6 +123,7 @@ var locModel = function(data, index) {
           pitch: 10
         }
       };
+      
       //create Panorama image for width higher than 768px
       var panorama = new google.maps.StreetViewPanorama(document.getElementById(
         'infoPanoImage'), panoOptions);
@@ -167,9 +167,9 @@ var locModel = function(data, index) {
       streetView.getPanoramaByLocation(thisMarker.position, radius,
         self.getStreetView);
 
-      // self.getStreetView(data, status, thisMarker);
+      //function call to get Wikipedia data
       self.WikiInfo(thisMarker);
-      //open content in infoWindow at anchor - thisMarker on 'map'
+      
       infoWindow.open(map, thisMarker);
     }
   }; //end of populateInfo()
@@ -206,10 +206,9 @@ var locModel = function(data, index) {
   /*------Set of functions END------*/
 
 
-  //function defination click callback
+  //function defination for clicked marker pin
   //keeping this separate so that it can be called when list item is clicked
   this.clickMarker = function(val, infoWindow) {
-    // val is the clicked marker
     self.toggleBounce(val);
     self.populateInfo(val, infoWindow);
   }; // end of function clickMarker()
@@ -264,7 +263,6 @@ var ViewModel = function() {
   //add data to locations observable Array - locations
   this.addData(self.locations());
 
-
   //function to add delay in dropping markers on map
   this.addMarkers = function(position, timeout) {
     window.setTimeout(function() {
@@ -272,6 +270,7 @@ var ViewModel = function() {
     }, timeout);
   };
 
+  //function to display location pins on map
   this.showLocations = function() {
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < self.locations().length; i++) {
@@ -284,8 +283,6 @@ var ViewModel = function() {
 
   //function to open location infowindow on map
   self.openLocInfo = function(locInfo) {
-    //locInfo - complete LocModel with all functions
-    // clickMarker is a function that append and open content to infowindow
     locInfo.clickMarker(locInfo.marker, windowInfo);
   };
 
@@ -323,7 +320,6 @@ var ViewModel = function() {
     }
   }, this); // end of currentLocs computed function
 
-
   //function to center map for mobile view to clicked location
   this.centerLoc = function(loc) {
     var lat = loc.location().lat;
@@ -336,21 +332,18 @@ var ViewModel = function() {
     self.openLocInfo(loc);
   };
 
-
   // click function for mobile search nav
   this.openList = function() {
     $('#sec_menu').toggleClass("change");
     $('#sec_list--mob').slideToggle();
   };
 
-};
+};//end of ViewModel
 
 
 /*============Init Function=============*/
 
 
 function initMap() {
-  /*=============applyig ko bindings=================*/
   ko.applyBindings(new ViewModel());
-  // ko.applyBindings(vmStandard);
 }
