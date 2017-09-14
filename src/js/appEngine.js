@@ -7,10 +7,8 @@ var loadScript = function() {
   JSElement.src = apiUrl;
   JSElement.async;
   JSElement.defer;
-  var te = document.getElementsByTagName('body');
-  console.log(te);
   document.getElementsByTagName('body')[0].appendChild(JSElement);
-}
+};
 
 loadScript();
 
@@ -18,7 +16,7 @@ loadScript();
 
 /*==========All Variables===========*/
 
-var map, windowInfo;
+var map, windowInfo, contentStr;
 
 
 /*-----checks if windowInfo is null-----*/
@@ -101,11 +99,53 @@ var locModel = function(data, index) {
     });
   }; //end of WikiInfo()
 
+  //function defination to setup content in infowindow
+  this.getStreetView = function(val, status) {
+
+    //OK means, image found in given location
+    if (status === google.maps.StreetViewStatus.OK) {
+
+      //data passed here is used to get lat lng, radius
+      var nearLoc = val.location.latLng;
+      //calculate heading for the panorama image option
+      var heading = google.maps.geometry.spherical.computeHeading(
+        nearLoc, self.marker.position);
+      var lat = nearLoc.lat();
+      var lng = nearLoc.lng();
+
+      //set content in InfoWindow
+      windowInfo.setContent(contentStr);
+
+      //StreetViewPanoramaOptions
+      var panoOptions = {
+        position: nearLoc,
+        pov: {
+          heading: heading,
+          pitch: 10
+        }
+      };
+      //create Panorama image for width higher than 768px
+      var panorama = new google.maps.StreetViewPanorama(document.getElementById(
+        'infoPanoImage'), panoOptions);
+
+      //getting static street image for mobile views
+      var staticImage =
+        'https://maps.googleapis.com/maps/api/streetview?size=300x300&location=' +
+        lat + ',' + lng + '&heading' + heading + '&pitch=20&key=' + myMapsKey;
+      $('#locImg').attr('src', staticImage);
+
+    } else {
+      windowInfo.setContent(contentStr);
+      $('#locImg').css('display', 'none');
+      $('#infoPanoImage').css('min-height', 'auto');
+    }
+  }; //end of getStreetView()
+
   //function to assign values to the InfoWindow properties
   this.populateInfo = function(thisMarker, infoWindow) {
     if (infoWindow.marker != thisMarker) {
 
-      var content = '<div class="infoStyle">' +
+      contentStr = '<div class="infoStyle">' +
         '<div class="infoTitle">' + thisMarker.loc +
         '</div><div><span class="bold">' + thisMarker.episode + ' - ' +
         '</span><span>' + thisMarker.title +
@@ -114,7 +154,6 @@ var locModel = function(data, index) {
         '</div><img id="locImg" src="">' +
         '<div id="infoWiki"><h3 class="infoTitle">' + thisMarker.city + ' - Wikipedia Resources</h3><ul>' +
         '</ul></div></div>';
-
 
       //using StreetViewService instead of Panorama
       //in-case image of given latLng is not available
@@ -126,53 +165,10 @@ var locModel = function(data, index) {
       //default method in prototype of google.maps.StreetViewService
       //getPanoramaByLocation(latlng, radius, callback fn)
       streetView.getPanoramaByLocation(thisMarker.position, radius,
-        getStreetView);
+        self.getStreetView);
 
-      //function DEF. of call back function - getStreetView
-      function getStreetView(data, status) {
-
-
-        //OK means, image found in given location
-        if (status === google.maps.StreetViewStatus.OK) {
-
-          //data passed here is used to get lat lng, radius
-          var nearLoc = data.location.latLng;
-          //calculate heading for the panorama image option
-          var heading = google.maps.geometry.spherical.computeHeading(
-            nearLoc, self.marker.position);
-          var lat = nearLoc.lat();
-          var lng = nearLoc.lng();
-
-          //set content in InfoWindow
-          infoWindow.setContent(content);
-
-          //StreetViewPanoramaOptions
-          var panoOptions = {
-            position: nearLoc,
-            pov: {
-              heading: heading,
-              pitch: 10
-            }
-          };
-          //create Panorama image for width higher than 768px
-          var panorama = new google.maps.StreetViewPanorama(document.getElementById(
-            'infoPanoImage'), panoOptions);
-
-          var staticImage =
-            'https://maps.googleapis.com/maps/api/streetview?size=300x300&location=' +
-            lat + ',' + lng + '&heading' + heading + '&pitch=20&key=' + myMapsKey;
-          $('#locImg').attr('src', staticImage);
-
-          self.WikiInfo(thisMarker);
-
-        } else {
-          infoWindow.setContent(content);
-          self.WikiInfo(thisMarker);
-          $('#locImg').css('display', 'none');
-          $('#infoPanoImage').css('min-height', 'auto');
-        }
-      }; //end of getStreetView()
-
+      // self.getStreetView(data, status, thisMarker);
+      self.WikiInfo(thisMarker);
       //open content in infoWindow at anchor - thisMarker on 'map'
       infoWindow.open(map, thisMarker);
     }
@@ -188,7 +184,7 @@ var locModel = function(data, index) {
         pin.setAnimation(null);
       }, 1450);
     }
-  }
+  };
 
 
   /*------Set of functions for Mouse events for marker pin------*/
@@ -216,7 +212,7 @@ var locModel = function(data, index) {
     // val is the clicked marker
     self.toggleBounce(val);
     self.populateInfo(val, infoWindow);
-  } // end of function clickMarker()
+  }; // end of function clickMarker()
 
 }; // end of locModel function DEFINATION
 
@@ -274,7 +270,7 @@ var ViewModel = function() {
     window.setTimeout(function() {
       position.setMap(map);
     }, timeout);
-  }
+  };
 
   this.showLocations = function() {
     var bounds = new google.maps.LatLngBounds();
@@ -284,14 +280,14 @@ var ViewModel = function() {
       bounds.extend(self.locations()[i].marker.position);
     }
     map.fitBounds(bounds);
-  } // end of showLocation()
+  }; // end of showLocation()
 
   //function to open location infowindow on map
   self.openLocInfo = function(locInfo) {
     //locInfo - complete LocModel with all functions
     // clickMarker is a function that append and open content to infowindow
     locInfo.clickMarker(locInfo.marker, windowInfo);
-  }
+  };
 
   //defining windowInfo before adding event listener function
   checkinfowindow();
@@ -338,14 +334,14 @@ var ViewModel = function() {
       lng: lng
     });
     self.openLocInfo(loc);
-  }
+  };
 
 
   // click function for mobile search nav
   this.openList = function() {
     $('#sec_menu').toggleClass("change");
     $('#sec_list--mob').slideToggle();
-  }
+  };
 
 };
 
