@@ -10,7 +10,7 @@ This map displays some of the locations in Vancouver, BC where TV Series - [Supe
 
 ## Getting Started
 
-* [Download]() or Clone, and open index.html
+* Download or Clone this repo, replace demo key with your own Google Api key in config.js, and open index.html
 * **Alternative** [Live version](#)
 
 ## Preperation
@@ -27,25 +27,25 @@ This map displays some of the locations in Vancouver, BC where TV Series - [Supe
 
 ### Interface
 
-* Responsive (progress)
-* Usability (pending)
+* Responsive (complete)
+* Usability (complete)
 
 ### Functionality
 
 * Map fullScreen Enabled
 * Toggle between Custom Map and Hybrid mapTypes
-* Filter locations using dropdown and error free
+* Filter locations using input field and error free
 * List view displays all locations and filtered subset locations
 * Map displays all locations by default and filtered subset locations
-* Markers animation and InfoWindow display when clicked on pin and list item
+* Markers animation and InfoWindow display when clicked on pin or list item
 * List functionality is responsive and error free
 
 ### App Structure
 
 * Google Maps API loads asynchronously
-* Asychronous request from third-party API (pending)
-* Error handling (pending)
-* Application runs without an error (in progress)
+* Asychronous request from third-party API (Wikipedia)
+* Error handling (complete)
+* Application runs without an error
 
 ### Location Details Functionality
 
@@ -53,17 +53,17 @@ This map displays some of the locations in Vancouver, BC where TV Series - [Supe
 * Episode and Season information
 * Displays Panorama Image for device widths > 768px
 * Displays Static Street View image for width < 768px
+* Displays additional Wikipedia links for the location
 
 ### Additional
 
-* Code minification (pending)
-* Ability to add Favourite (pending)
+* Code minification (complete)
 * Comments to explain functionality
-* Code quality as per Udacity JS style guide (pending)
+* Code quality as per Udacity JS style guide (complete)
 
 ## Deployment
 
-* Knockout handled list, filter, adding favourite (pending), click event on list
+* Knockout handled list, filter, click event on list
 * Seprarate model function for Map marker, marker click events
 
 ## Issues during deployment:
