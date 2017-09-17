@@ -80,6 +80,11 @@ This map displays some of the locations in Vancouver, BC where TV Series - [Supe
 * **Deferred update:** When I entered search term in the input bar, it would update map and list only when I enter second letter or second key press. This caused delay and asynchronous update rendering.
   
   **Solution:** I noticed that when following is used for computed observablearray - value: computedObservableArray, valueUpdate: 'afterkeydown' or 'keydown'. textInput is better approach to get update with computed observablearray. [Source: Browser event quirks handling](http://knockoutjs.com/documentation/textinput-binding.html)
+  
+* **Issue:** With <!DOCTYPE HTML>, Google Maps would disappear.
+
+  **Solution:** Google Maps inherits height of the parent div. Doctype html set the height of body, html to 0. Setting body, html or the parent div of the Google Maps div to fied height resolved the issue.
+  height: 100%;  
 
 
 ## Resources:
