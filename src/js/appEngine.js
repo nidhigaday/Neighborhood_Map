@@ -1,4 +1,4 @@
-/*======Append Google API to DOM=====*/
+/*======Append Google API=====*/
 
 var loadScript = function() {
 
@@ -7,6 +7,9 @@ var loadScript = function() {
   JSElement.src = apiUrl;
   JSElement.async;
   JSElement.defer;
+  JSElement.onerror = function() {
+    $('.sec_map').text("Oops! Google maps could not be loaded, please try again later.");
+  };
   document.getElementsByTagName('body')[0].appendChild(JSElement);
 };
 
@@ -16,7 +19,7 @@ loadScript();
 
 /*==========All Variables===========*/
 
-var map, windowInfo, contentStr;
+var map, windowInfo, contentStr, vm;
 
 
 /*-----checks if windowInfo is null-----*/
@@ -28,9 +31,10 @@ function checkinfowindow() {
 
 /*======================Model=========================*/
 
-var locModel = function(data, index) {
+var LocModel = function(data, index) {
 
   var self = this;
+  //information required for list fiter computation
   this.location = ko.observable(data.location);
   this.title = ko.observable(data.title);
   this.zip = ko.observable(data.pin);
@@ -59,6 +63,15 @@ var locModel = function(data, index) {
     scaledSize: new google.maps.Size(50, 44)
   };
 
+  this.contentStr = '<div class="infoStyle">' +
+    '<div class="infoTitle">' + this.loc() +
+    '</div><div><span class="bold">' + this.episode() + ' - ' +
+    '</span><span>' + this.title() +
+    '</span></div><div>' + this.zip() +
+    '</div><div id="infoPanoImage">No Street View Found' +
+    '</div><img id="locImg" src="">' +
+    '</div>';
+
   //create marker for each location
   this.marker = new google.maps.Marker({
     position: data.location,
@@ -73,39 +86,14 @@ var locModel = function(data, index) {
     visible: false
   });
 
-  this.WikiInfo = function(clickedmarker) {
-
-    var Wikiurl = "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + clickedmarker.city;
-
-    var wikiRequestTimeout = setTimeout(function() {
-      $('#infoWiki').text('Failed to load Wikipedia Resources');
-    }, 1000);
-
-    //get call to request Wiki API data
-    $.ajax({
-      url: Wikiurl,
-      dataType: 'jsonp'
-    }).done(function(data) {
-      for (i = 0; i < data.length; i++) {
-        var wikiTitle = data[1][i];
-        var wikiUrl = data[3][i];
-        $('#infoWiki ul').append('<li>' +
-          '<a target="_blank" href="' + wikiUrl + '">' +
-          '<span>' + wikiTitle + '</span>' +
-          '</a>' +
-          '</li>');
-      }
-      clearTimeout(wikiRequestTimeout);
-    });
-  }; //end of WikiInfo()
-
   //function defination to setup content in infowindow
   this.getStreetView = function(val, status) {
 
     //OK means, image found in given location
     if (status === google.maps.StreetViewStatus.OK) {
+
+      //data passed here is used to get lat lng, radius
       var nearLoc = val.location.latLng;
-      
       //calculate heading for the panorama image option
       var heading = google.maps.geometry.spherical.computeHeading(
         nearLoc, self.marker.position);
@@ -113,7 +101,7 @@ var locModel = function(data, index) {
       var lng = nearLoc.lng();
 
       //set content in InfoWindow
-      windowInfo.setContent(contentStr);
+      windowInfo.setContent(self.contentStr);
 
       //StreetViewPanoramaOptions
       var panoOptions = {
@@ -123,7 +111,7 @@ var locModel = function(data, index) {
           pitch: 10
         }
       };
-      
+
       //create Panorama image for width higher than 768px
       var panorama = new google.maps.StreetViewPanorama(document.getElementById(
         'infoPanoImage'), panoOptions);
@@ -135,25 +123,16 @@ var locModel = function(data, index) {
       $('#locImg').attr('src', staticImage);
 
     } else {
-      windowInfo.setContent(contentStr);
+      windowInfo.setContent(self.contentStr);
       $('#locImg').css('display', 'none');
       $('#infoPanoImage').css('min-height', 'auto');
     }
   }; //end of getStreetView()
 
+
   //function to assign values to the InfoWindow properties
   this.populateInfo = function(thisMarker, infoWindow) {
     if (infoWindow.marker != thisMarker) {
-
-      contentStr = '<div class="infoStyle">' +
-        '<div class="infoTitle">' + thisMarker.loc +
-        '</div><div><span class="bold">' + thisMarker.episode + ' - ' +
-        '</span><span>' + thisMarker.title +
-        '</span></div><div>' + thisMarker.zip +
-        '</div><div id="infoPanoImage">No Street View Found' +
-        '</div><img id="locImg" src="">' +
-        '<div id="infoWiki"><h3 class="infoTitle">' + thisMarker.city + ' - Wikipedia Resources</h3><ul>' +
-        '</ul></div></div>';
 
       //using StreetViewService instead of Panorama
       //in-case image of given latLng is not available
@@ -167,9 +146,7 @@ var locModel = function(data, index) {
       streetView.getPanoramaByLocation(thisMarker.position, radius,
         self.getStreetView);
 
-      //function call to get Wikipedia data
-      self.WikiInfo(thisMarker);
-      
+      //open content in infoWindow at anchor - thisMarker on 'map'
       infoWindow.open(map, thisMarker);
     }
   }; //end of populateInfo()
@@ -206,9 +183,10 @@ var locModel = function(data, index) {
   /*------Set of functions END------*/
 
 
-  //function defination for clicked marker pin
+  //function defination click callback
   //keeping this separate so that it can be called when list item is clicked
   this.clickMarker = function(val, infoWindow) {
+    // val is the clicked marker
     self.toggleBounce(val);
     self.populateInfo(val, infoWindow);
   }; // end of function clickMarker()
@@ -222,12 +200,6 @@ var locModel = function(data, index) {
 
 var ViewModel = function() {
   var self = this;
-
-  //initializing loactions array
-  this.locations = ko.observableArray([]);
-
-  //input value for searched location
-  this.typedAddress = ko.observable('');
 
   //Create new map
   map = new google.maps.Map(document.getElementById('map'), {
@@ -253,10 +225,16 @@ var ViewModel = function() {
   map.mapTypes.set('custom_map', styledMapType);
   map.setMapTypeId('custom_map');
 
+  //initializing loactions array
+  this.locations = ko.observableArray([]);
+
+  //input value for searched location
+  this.typedAddress = ko.observable('');
+
   //function def to add data to KO observable array from raw data object
   this.addData = function(arr) {
     for (var n = 0; n < data.length; n++) {
-      arr.push(new locModel(data[n], n));
+      arr.push(new LocModel(data[n], n));
     }
   };
 
@@ -270,7 +248,6 @@ var ViewModel = function() {
     }, timeout);
   };
 
-  //function to display location pins on map
   this.showLocations = function() {
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < self.locations().length; i++) {
@@ -283,6 +260,8 @@ var ViewModel = function() {
 
   //function to open location infowindow on map
   self.openLocInfo = function(locInfo) {
+    //locInfo - complete LocModel with all functions
+    // clickMarker is a function that append and open content to infowindow
     locInfo.clickMarker(locInfo.marker, windowInfo);
   };
 
@@ -320,6 +299,7 @@ var ViewModel = function() {
     }
   }, this); // end of currentLocs computed function
 
+
   //function to center map for mobile view to clicked location
   this.centerLoc = function(loc) {
     var lat = loc.location().lat;
@@ -332,18 +312,47 @@ var ViewModel = function() {
     self.openLocInfo(loc);
   };
 
+  this.wikidata = ko.observableArray([]);
+
+  //function to get Wikipedia data
+  this.getwiki = function() {
+    var term = 'Supernatual U.S TV Series';
+    var Wikiurl = "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + term;
+
+    var wikiRequestTimeout = setTimeout(function() {
+      $('.wikierror').text('Failed to load Wikipedia Resources').css('display', 'block');
+    }, 1000);
+
+    $.ajax({
+      url: Wikiurl,
+      dataType: 'jsonp',
+    }).done(function(data) {
+      console.log('success');
+      self.wikidata.push({
+        title: ko.observable(data[0]),
+        src: ko.observable(data[3]),
+        snippet: ko.observable(data[2])
+      });
+      clearTimeout(wikiRequestTimeout);
+    });
+  };
+  this.getwiki();
+
   // click function for mobile search nav
   this.openList = function() {
     $('#sec_menu').toggleClass("change");
     $('#sec_list--mob').slideToggle();
   };
 
-};//end of ViewModel
+};
 
 
 /*============Init Function=============*/
 
 
 function initMap() {
-  ko.applyBindings(new ViewModel());
+  vm = new ViewModel();
+  /*=============applyig ko bindings=================*/
+  ko.applyBindings(vm);
+
 }
