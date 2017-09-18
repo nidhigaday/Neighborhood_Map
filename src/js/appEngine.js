@@ -163,9 +163,7 @@ var LocModel = function(data, index) {
         }
       };
       //getting static street image for mobile views
-      var staticImage =
-        'https://maps.googleapis.com/maps/api/streetview?size=300x300&location=' +
-        lat + ',' + lng + '&heading' + heading + '&pitch=20&key=' + myMapsKey;
+      var staticImage = 'https://maps.googleapis.com/maps/api/streetview?size=300x300&location=' + lat + ',' + lng + '&heading' + heading + '&pitch=20&key=' + myMapsKey;
       self.imgStr = '</div><div id="infoPanoImage">' +
         '</div><img id="locImg" src="' + staticImage + '">' +
         '</div>';
@@ -325,13 +323,7 @@ var ViewModel = function() {
 
   //function to center map for mobile view to clicked location
   this.centerLoc = function(loc) {
-    var lat = loc.location().lat;
-    var lng = loc.location().lng;
     self.openList();
-    map.setCenter({
-      lat: lat,
-      lng: lng
-    });
     self.openLocInfo(loc);
   };
 
