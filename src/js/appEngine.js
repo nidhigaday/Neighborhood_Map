@@ -77,7 +77,7 @@ var getWiki = function(location) {
   vm.wikidata([]);
 
   var term = 'Supernatual ' + location.season;
-  var Wikiurl = "https://en.wikipedi\a.org/w/api.php?action=opensearch&format=json&search=" + term;
+  var Wikiurl = "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + term;
 
   $.ajax({
     url: Wikiurl,
