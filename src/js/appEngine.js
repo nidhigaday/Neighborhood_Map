@@ -77,7 +77,7 @@ var getWiki = function(location) {
   vm.wikidata([]);
 
   var term = 'Supernatual ' + location.season;
-  var Wikiurl = "https://en.wikpedia.org/w/api.php?action=opensearch&format=json&search=" + term;
+  var Wikiurl = "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=" + term;
 
   $.ajax({
     url: Wikiurl,
@@ -88,9 +88,8 @@ var getWiki = function(location) {
       src: ko.observable(data[3][0]),
       snippet: ko.observable(data[2][0])
     });
-  }).fail(function(textStatus) {
-    console.log(textStatus.statusText);
-    if (textStatus == 'error') {
+  }).fail(function(report) {
+    if (report.status == 404) {
       vm.wikiError(true);
     }
   });
@@ -167,7 +166,7 @@ var LocModel = function(data, index) {
       var staticImage =
         'https://maps.googleapis.com/maps/api/streetview?size=300x300&location=' +
         lat + ',' + lng + '&heading' + heading + '&pitch=20&key=' + myMapsKey;
-      self.imgStr = '</div><div id="infoPanoImage">No Street View Found' +
+      self.imgStr = '</div><div id="infoPanoImage">' +
         '</div><img id="locImg" src="' + staticImage + '">' +
         '</div>';
       //set content in InfoWindow
@@ -176,7 +175,7 @@ var LocModel = function(data, index) {
       var panorama = new google.maps.StreetViewPanorama(document.getElementById(
         'infoPanoImage'), panoOptions);
     } else {
-      self.imgStr = '</div><div id="locImg" style="min-height: auto">No Street View Found' +
+      self.imgStr = '</div><div class="noImage" style="min-height: auto">No Street View Found' +
         '</div></div>';
       windowInfo.setContent(self.contentStr + self.imgStr);
     }
@@ -343,6 +342,7 @@ var ViewModel = function() {
     $('#sec_list--mob').slideToggle();
   };
 }; //end of ViewModel()
+
 
 
 
