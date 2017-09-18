@@ -89,6 +89,7 @@ var getWiki = function(location) {
       snippet: ko.observable(data[2][0])
     });
   }).fail(function(textStatus) {
+    console.log(textStatus);
     if (textStatus == 'error') {
       vm.wikiError(true);
     }
