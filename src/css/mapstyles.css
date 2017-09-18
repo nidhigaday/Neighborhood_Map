@@ -1,288 +1,266 @@
-  html,
-  body {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      color: #111;
-      background-color: rgba(229, 246, 221, 0.15);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      overflow: hidden;
+html, 
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: #111;
+  background-color: rgba(229, 246, 221, 0.15);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+.clearfix {
+  clear: both;
+}
+.bold {
+  font-weight: 600;
+}
+.container {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.sec_nav {
+  background-color: rgb(229, 246, 221);
+}
+.element {
+  display: inline-block;
+  vertical-align: top;
+}
+.sec_map {
+  width: 78.5%;
+  height: 100%;
+}
+.sec_list {
+  width: 21%;
+  max-height: 660px;
+  overflow: hidden;
+}
+.infoStyle {
+  color: #111;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 5px 2px;
+}
+.infoStyle>div {
+  margin-bottom: 5px;
+}
+.infoTitle {
+  padding: 3px 5px;
+  background-color: rgb(229, 246, 221);
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+#infoPanoImage, 
+#locImg {
+  display: block;
+  width: 100%;
+  min-height: 200px;
+  margin: 10px 0 0 0;
+  font-weight: 500;
+}
+.wikiTitle {
+  margin-top: 0;
+  font-weight: 500;
+  font-size: 20px;
+  padding: 10px 15px;
+  background-color: rgb(229, 246, 221);
+}
+.infoWiki p {
+  padding: 0 15px;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.infoWiki a {
+  color: #4c8f2d;
+  text-decoration: none;
+  font-size: 15px;
+  margin: 0 15px;
+}
+.infoWiki a:hover {
+  font-weight: 700;
+}
+.buttons {
+  display: inline-block;
+  color: black;
+  padding: 2px;
+  margin-right: 5px;
+  border-radius: 5px;
+  box-shadow: 6px 6px 6px #888;
+}
+.sec_clear {
+  clear: both;
+}
+.sec_input {
+  text-align: center;
+  background-color: rgb(229, 246, 221);
+  padding: 10px 0 13px 0;
+  position: fixed;
+  width: inherit;
+}
+.input_box {
+  width: 80%;
+  padding: 10px;
+  box-shadow: 6px 6px 6px #888;
+  border: none;
+  font-size: 15px;
+  border-radius: 5px;
+}
+.sec_list--loc {
+  display: block;
+  text-align: left;
+  list-style-type: none;
+  padding: 0 15px;
+  margin-bottom: 10px;
+  list-style-position: inside;
+  margin-top: 70px;
+  height: 300px;
+  overflow-y: scroll;
+}
+.sec_loc {
+  color: #111;
+  background-color: rgba(198, 212, 186, 0.64);
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 5px;
+  box-shadow: 6px 6px 6px #888;
+}
+.sec_loc--mob {
+  color: #111;
+  background-color: rgba(198, 212, 186, 0.64);
+  padding: 10px;
+  margin-bottom: 12px;
+  display: block;
+}
+.sec_loc:active {
+  box-shadow: 3px 3px 6px #888;
+}
+.loc_title {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.sec_loc span {
+  font-weight: 600;
+  font-size: 13px;
+}
+.sec_loc:hover {
+  cursor: pointer;
+}
+.wikiLink {
+  position: fixed;
+  width: 230px;
+  left: 0;
+  bottom: 0;
+  background-color: rgb(229, 246, 221);
+  margin: 10px;
+}
+.wikiLink a {
+  margin: 5px;
+}
+.wikiLink p {
+  margin: 5px;
+  height: 200px;
+  overflow-y: scroll;
+}
+.wikierror {
+  height: auto !important;
+  overflow: hidden !important;
+}
+.mob_links {
+  list-style-type: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+}
+@media screen and (max-width: 768px) {
+  #infoPanoImage {
+    display: none;
   }
-
-  .clearfix {
-      clear: both;
-  }
-
-  .bold {
-      font-weight: 600;
-  }
-
-  .container {
-      display: block;
-      width: 100%;
-      height: 100%;
-  }
-
-  .sec_nav {
-      background-color: rgb(229, 246, 221);
-  }
-
-  .element {
-      display: inline-block;
-      vertical-align: top;
-  }
-
-  .sec_map {
-      width: 78.5%;
-      height: 100%;
-      /*overflow: hidden;*/
-  }
-
-  .sec_list {
-      width: 21%;
-      max-height: 635px;
-      overflow: hidden;
-  }
-
-  .infoStyle {
-      color: #111;
-      text-align: left;
-      font-size: 13px;
-      font-weight: 400;
-      padding: 5px 2px;
-  }
-
-  .infoStyle>div {
-      margin-bottom: 5px;
-  }
-
-  .infoTitle {
-      padding: 3px 5px;
-      background-color: rgb(229, 246, 221);
-      font-weight: 500;
-      font-size: 20px;
-      margin-bottom: 5px;
-  }
-
-  #infoPanoImage,
   #locImg {
-      display: block;
-      width: 100%;
-      min-height: 200px;
-      margin: 10px 0 0 0;
-      font-weight: 500;
+    display: block;
   }
-
-  .wikiTitle {
-      margin-top: 0;
-      font-weight: 500;
-      font-size: 20px;
-      padding: 10px 15px;
-      background-color: rgb(229, 246, 221);
-      /*border-radius: 5px;*/
-      /*box-shadow: 6px 6px 6px #888;*/
+}
+@media screen and (min-width: 768px) {
+  #locImg {
+    display: none;
   }
-
-  .infoWiki p {
-      padding: 0 15px;
-      font-size: 14px;
-      margin-top: 20px;
+  #infoPanoImage {
+    display: block;
   }
-
-  .infoWiki a {
-      color: #4c8f2d;
-      text-decoration: none;
-      font-size: 15px;
-      margin: 0 15px;
+}
+@media screen and (max-width: 960px) {
+  .sec_nav {
+    display: block;
   }
-
-  .infoWiki a:hover {
-      font-weight: 700;
+  .sec_input, 
+  .sec_list, 
+  .sec_list--mob {
+    display: none;
   }
-
-  .buttons {
-      display: inline-block;
-      color: black;
-      padding: 2px;
-      margin-right: 5px;
-      border-radius: 5px;
-      box-shadow: 6px 6px 6px #888;
+  .sec_map {
+    width: 100%;
+    height: 94.5%;
   }
-
-  .sec_clear {
-      clear: both;
-  }
-
-  .sec_input {
-      text-align: center;
-      background-color: rgb(229, 246, 221);
-      padding: 10px 0 13px 0;
-      position: fixed;
-      width: inherit;
-  }
-
   .input_box {
-      width: 80%;
-      padding: 10px;
-      box-shadow: 6px 6px 6px #888;
-      border: none;
-      font-size: 15px;
-      border-radius: 5px;
+    width: 100%;
+    box-shadow: none;
+    margin-left: 40px;
   }
-
-  .sec_list--loc {
-      display: block;
-      text-align: left;
-      list-style-type: none;
-      padding: 0 15px;
-      margin-bottom: 10px;
-      list-style-position: inside;
-      margin-top: 70px;
-      height: 350px;
-      overflow-y: scroll;
+  .sec_menu {
+    display: inline-block;
   }
-
-  .sec_loc {
-      color: #111;
-      background-color: rgba(198, 212, 186, 0.64);
-      padding: 10px;
-      margin-bottom: 12px;
-      border-radius: 5px;
-      box-shadow: 6px 6px 6px #888;
+  .sec_menu--icon {
+    cursor: pointer;
+    margin-right: 10px;
+    position: absolute;
   }
-
-  .sec_loc--mob {
-      color: #111;
-      background-color: rgba(198, 212, 186, 0.64);
-      padding: 10px;
-      margin-bottom: 12px;
-      display: block;
+  .bar1, 
+  .bar2, 
+  .bar3 {
+    width: 30px;
+    height: 4px;
+    background-color: rgb(107, 169, 79);
+    margin: 5px;
+    transition: 0.4s;
+    border-radius: 5px;
   }
-
-  .sec_loc:active {
-      box-shadow: 3px 3px 6px #888;
+  /* Rotate first bar */
+  .change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-7px, 6px);
+    transform: rotate(-45deg) translate(-7px, 6px);
   }
-
-  .loc_title {
-      margin-top: 10px;
-      margin-bottom: 5px;
+  /* Fade out the second bar */
+  .change .bar2 {
+    opacity: 0;
   }
-
-  .sec_loc span {
-      font-weight: 600;
-      font-size: 13px;
+  /* Rotate last bar */
+  .change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-6px, -6px);
+    transform: rotate(45deg) translate(-6px, -6px);
   }
-
-  .sec_loc:hover {
-      cursor: pointer;
+  .sec_list--mob {
+    width: 200px;
+    max-height: 260px;
+    z-index: 3;
+    position: absolute;
+    margin-top: 0;
+    overflow-y: scroll;
+    background-color: rgb(229, 246, 221);
+    border: 2px solid #7cb342;
+    border-top: none;
+    border-left: none;
+    text-align: left;
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    list-style-position: inside;
   }
-
+}
+@media screen and (min-width: 960px) {
+  .sec_nav, 
+  .sec_list--mob, 
   .wikiLink {
-      position: relative;
-      width: 200px;
-      background-color: #6ba94f;
+    display: none;
   }
-
-  .wikierror {
-      display: none;
-  }
-
-  .mob_links {
-      list-style-type: none;
-      padding: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-      #infoPanoImage {
-          display: none;
-      }
-      #locImg {
-          display: block;
-      }
-  }
-
-  @media screen and (min-width: 768px) {
-      #locImg {
-          display: none;
-      }
-      #infoPanoImage {
-          display: block;
-      }
-  }
-
-  @media screen and (max-width: 960px) {
-      .sec_nav {
-          display: block;
-      }
-      .sec_input,
-      .sec_list,
-      .sec_list--mob {
-          /*.sec_input, .sec_list--loc, .sec_list--mob, .infoWiki {*/
-          display: none;
-      }
-      .sec_map {
-          width: 100%;
-      }
-      .input_box {
-          width: 100%;
-          box-shadow: none;
-          margin-left: 40px;
-      }
-      .sec_menu {
-          display: inline-block;
-      }
-      .sec_menu--icon {
-          cursor: pointer;
-          margin-right: 10px;
-          position: absolute;
-      }
-      .bar1,
-      .bar2,
-      .bar3 {
-          width: 30px;
-          height: 4px;
-          background-color: rgb(107, 169, 79);
-          margin: 5px;
-          transition: 0.4s;
-          border-radius: 5px;
-      }
-      /* Rotate first bar */
-      .change .bar1 {
-          -webkit-transform: rotate(-45deg) translate(-7px, 6px);
-          transform: rotate(-45deg) translate(-7px, 6px);
-      }
-      /* Fade out the second bar */
-      .change .bar2 {
-          opacity: 0;
-      }
-      /* Rotate last bar */
-      .change .bar3 {
-          -webkit-transform: rotate(45deg) translate(-6px, -6px);
-          transform: rotate(45deg) translate(-6px, -6px);
-      }
-      .sec_list--mob {
-          width: 200px;
-          max-height: 260px;
-          z-index: 3;
-          position: absolute;
-          margin-top: 0;
-          overflow-y: scroll;
-          background-color: rgb(229, 246, 221);
-          border: 2px solid #7cb342;
-          border-top: none;
-          border-left: none;
-          text-align: left;
-          list-style-type: none;
-          padding: 10px;
-          margin: 0;
-          list-style-position: inside;
-      }
-  }
-
-  @media screen and (min-width: 960px) {
-      .sec_nav,
-      .sec_list--mob {
-          display: none;
-      }
-  }
+}
