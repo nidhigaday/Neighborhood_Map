@@ -11,6 +11,7 @@ This map displays some of the locations in Vancouver, BC where TV Series - [Supe
 ## Getting Started
 
 * Download or Clone this repo, replace demo key with your own Google Api key in config.js, and open index.html
+* Checkout [Live version here](https://supernatural-neighborhood-map.herokuapp.com)
 
 
 ## Preperation
