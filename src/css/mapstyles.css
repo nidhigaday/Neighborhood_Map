@@ -90,6 +90,8 @@ html, body {
   padding: 5px 15px;
   background-color: rgb(229, 246, 221);
   line-height: 20px;
+  text-shadow: 1px 1px #999;
+  color: rgb(51, 79, 38);
 }
 
 .infoWiki p {
