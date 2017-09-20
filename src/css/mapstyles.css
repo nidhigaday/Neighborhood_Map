@@ -1,5 +1,4 @@
-html, 
-body {
+html, body {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -36,6 +35,7 @@ body {
 .sec_map {
   width: 78.5%;
   height: 100%;
+  /*overflow: hidden;*/
 }
 
 .sec_list {
@@ -64,13 +64,11 @@ body {
   margin-bottom: 5px;
 }
 
-#infoPanoImage, 
-#locImg {
+#infoPanoImage, #locImg {
   display: block;
   width: 100%;
   min-height: 200px;
   margin: 10px 0 0 0;
-  font-weight: 500;
 }
 
 .noImage {
@@ -85,6 +83,15 @@ body {
   background-color: rgb(229, 246, 221);
 }
 
+.appName {
+  margin: 5px 0;
+  font-weight: 600;
+  font-size: 17px;
+  padding: 5px 15px;
+  background-color: rgb(229, 246, 221);
+  line-height: 20px;
+}
+
 .infoWiki p {
   padding: 0 15px;
   font-size: 14px;
@@ -97,6 +104,7 @@ body {
   font-size: 15px;
   margin: 0 15px;
 }
+
 .infoWiki a:hover {
   font-weight: 700;
 }
@@ -212,7 +220,6 @@ body {
   #infoPanoImage {
     display: none;
   }
-  
   #locImg {
     display: block;
   }
@@ -231,37 +238,27 @@ body {
   .sec_nav {
     display: block;
   }
-  
-  .sec_input, 
-  .sec_list, 
-  .sec_list--mob {
+  .sec_input, .sec_list, .sec_list--mob {
     display: none;
   }
-  
   .sec_map {
     width: 100%;
     height: 94.5%;
   }
-  
   .input_box {
     width: 100%;
     box-shadow: none;
     margin-left: 40px;
   }
-  
   .sec_menu {
     display: inline-block;
   }
-  
   .sec_menu--icon {
     cursor: pointer;
     margin-right: 10px;
     position: absolute;
   }
-  
-  .bar1, 
-  .bar2, 
-  .bar3 {
+  .bar1, .bar2, .bar3 {
     width: 30px;
     height: 4px;
     background-color: rgb(107, 169, 79);
@@ -269,24 +266,20 @@ body {
     transition: 0.4s;
     border-radius: 5px;
   }
-  
   /* Rotate first bar */
   .change .bar1 {
     -webkit-transform: rotate(-45deg) translate(-7px, 6px);
     transform: rotate(-45deg) translate(-7px, 6px);
   }
-  
   /* Fade out the second bar */
   .change .bar2 {
     opacity: 0;
   }
-  
   /* Rotate last bar */
   .change .bar3 {
     -webkit-transform: rotate(45deg) translate(-6px, -6px);
     transform: rotate(45deg) translate(-6px, -6px);
   }
-  
   .sec_list--mob {
     width: 200px;
     max-height: 260px;
@@ -307,9 +300,7 @@ body {
 }
 
 @media screen and (min-width: 960px) {
-  .sec_nav, 
-  .sec_list--mob, 
-  .wikiLink {
+  .sec_nav, .sec_list--mob, .wikiLink {
     display: none;
   }
 }

@@ -32,6 +32,8 @@
     <div class="container">
 
       <div class="element sec_list">
+        <p class="appName"><u>Filming Locations</u>:
+          <br> Supernatural U.S TV Series</p>
         <div class="sec_input sec_clear">
           <input class="input_box" placeholder="Enter the favourite location!" type="text" data-bind="textInput: typedAddress" />
         </div>
@@ -55,7 +57,9 @@
         </div>
       </div>
 
-      <div id="map" class="element sec_map "></div>
+      <div id="map" class="element sec_map ">
+
+      </div>
 
       <div class="wikiLink">
         <!-- ko if: wikidata().length > 0-->
@@ -68,6 +72,8 @@
         <!-- /ko -->
         <p class="wikierror " data-bind="visible: wikiError">Failed to load Wikipedia Resources</p>
       </div>
+
+
 
     </div>
 
